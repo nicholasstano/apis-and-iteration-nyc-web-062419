@@ -5,11 +5,12 @@ require_relative "../lib/command_line_interface.rb"
 
 welcome
 character = get_character_from_user
-binding.pry
-0
-
+here
 show_character_movies(character)
 
+
+binding.pry
+0
 
 
 

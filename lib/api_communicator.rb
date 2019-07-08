@@ -14,13 +14,9 @@ require 'pry'
     final_hash
   end
 
-  def get_movie_title
-      
-      # response_string = RestClient.get("https://swapi.co/api/films/")
-      # response_hash = JSON.parse(response_string)
-      # array = response_hash["results"]
-
-      # array[i]["title"]
+  def show_character_movies(character)
+    films = get_character_movies_from_api(character)
+    print_movies(films)
   end
 
   def get_character_movies_from_api(character_name)
@@ -28,7 +24,7 @@ require 'pry'
     url_array = get_results_array.find do |character_instance|
       character_instance["name"].to_s.downcase == character_name
     end
-    character_film_array = url_array.map do |url_instance|
+    character_film_array = url_array["films"].map do |url_instance|
     movie_string = RestClient.get(url_instance)
     movie_array = JSON.parse(movie_string)
     end
@@ -37,25 +33,15 @@ require 'pry'
     end
     
   end
-  # print_movies(a["films"])
-  # iterate over the response hash to find the collection of `films` for the given
-  #   `character`
-  # collect those film API urls, make a web request to each URL to get the info
-  #  for that film
-  # return value of this method should be collection of info about each film.
-  #  i.e. an array of hashes in which each hash reps a given film
-  # this collection will be the argument given to `print_movies`
-  #  and that method will do some nice presentation stuff like puts out a list
-  #  of movies by title. Have a play around with the puts with other info about a given film.
+ 
+  def print_movies(films)
+    # some iteration magic and puts out the movies in a nice list
+    films.each do |film_array|
+      puts film_array
+    end
+  end
 
-def print_movies(films)
-  # some iteration magic and puts out the movies in a nice list
-end
 
-def show_character_movies(character)
-  films = get_character_movies_from_api(character)
-  print_movies(films)
-end
 
 ## BONUS
 
