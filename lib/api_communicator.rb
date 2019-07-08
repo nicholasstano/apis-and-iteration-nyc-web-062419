@@ -2,10 +2,22 @@ require 'rest-client'
 require 'json'
 require 'pry'
 
+def get_results_array
+
+  i = 1
+  final_hash = []
+  while i < 10 
+    response_string = RestClient.get("https://swapi.co/api/people/?format=json&page=#{i}")
+    response_hash = JSON.parse(response_string)
+    final_hash = final_hash.concat(response_hash["results"])
+    i += 1
+  end
+  final_hash
+
+end
+
 def get_character_movies_from_api(character_name)
   #make the web request
-  response_string = RestClient.get('http://www.swapi.co/api/people/')
-  response_hash = JSON.parse(response_string)
 
   # iterate over the response hash to find the collection of `films` for the given
   #   `character`
